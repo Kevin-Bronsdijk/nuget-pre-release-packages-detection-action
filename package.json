@@ -2,7 +2,7 @@
   "name": "nuget-pre-release-packages-detection-action",
   "version": "1.0.0",
   "description": "GitHub Action which detects pre-release Nuget packages",
-  "main": "index.js",
+  "main": "dist\\index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
