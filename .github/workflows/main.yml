@@ -30,6 +30,3 @@ jobs:
       run: npm ci
     - run: npm run build --if-present
     - run: npm test
-    - uses: artiomtr/jest-coverage-report-action@v1.0
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
