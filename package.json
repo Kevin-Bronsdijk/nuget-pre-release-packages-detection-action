@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage=true",
-    "build": "ncc build src/index.js"
+    "buildncc": "ncc build src/index.js"
   },
   "repository": {
     "type": "git",
