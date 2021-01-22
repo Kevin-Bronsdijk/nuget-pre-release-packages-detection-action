@@ -20,8 +20,16 @@ Indicator if a pre-release was found, true or false.
 
 ## Example usage
 
-uses: kevin-bronsdijk/nuget-pre-release-packages-detection-action@v1.1
-with:
-  solution-file-name: 'devslice.sln'
-  solution-path: '/home/'
+
+```yml
+
+jobs:
+    precheck:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: kevin-bronsdijk/nuget-pre-release-packages-detection-action@v2.0
+              with:
+                  solution-file-name: 'devslice.sln'
+                  solution-path: '/home/'
+```
   
