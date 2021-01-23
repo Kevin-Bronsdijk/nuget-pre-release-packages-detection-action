@@ -18,6 +18,8 @@ jobs:
         run: node --version
       - name: Install Dependencies
         run: npm ci
+      - name: Run ncc build
+        run: npm run-script buildncc
       - run: mkdir -p ./dist
       - run: echo "123" > ./dist/index.js
       - name: Commit changes
