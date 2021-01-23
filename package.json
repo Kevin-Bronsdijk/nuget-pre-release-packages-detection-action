@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage=true",
-    "buildncc": "ncc build src/index.js --license licenses.txt"
+    "buildncc": "ncc build src/index.js --license licenses.txt",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",

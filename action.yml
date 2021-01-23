@@ -1,13 +1,15 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'nuget pre-release detection'
+description: 'This action detects pre-release NuGet packages for all projects linked to a given solution file.'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  solution-file-name:
+    description: 'The name of the solution file'
     required: true
-    default: 'World'
+  solution-path:
+      description: 'The directory where the solution solution file exists'
+      required: true
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  found-pre-release:
+    description: 'Boolean indicator used to tell that a pre-release packages was found.'
 runs:
   using: 'node12'
   main: 'dist/index.js'
