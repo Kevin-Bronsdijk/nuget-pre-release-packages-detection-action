@@ -33,4 +33,3 @@ jobs:
                   solution-file-name: 'devslice.sln'
                   solution-path: '/home/'
 ```
-  
