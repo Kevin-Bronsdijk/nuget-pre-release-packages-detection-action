@@ -29,7 +29,9 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - uses: kevin-bronsdijk/nuget-pre-release-packages-detection-action@v2.0
+              id: nugetprerelease
               with:
                   solution-file-name: 'devslice.sln'
                   solution-path: '/home/'
+            - run: echo "result ${{ steps.nugetprerelease.outputs.found-pre-release }}"
 ```
