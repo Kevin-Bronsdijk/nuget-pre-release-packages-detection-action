@@ -504,10 +504,11 @@ const main = async () => {
       await getProjectFilePaths(solutionPath, solutionFileName);
 
   getProjectPackageReference(projectPaths).then((packageErrors) => {
+    // todo: hookup logic
     console.log(packageErrors.filter((e) => e != null), projectPaths);
   });
 
-  core.setOutput('found-prerelease', false);
+  core.setOutput('found-pre-release', false);
 };
 
 main().catch((err) => core.setFailed(err.message));
