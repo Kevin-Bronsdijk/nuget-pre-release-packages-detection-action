@@ -29,8 +29,9 @@ jobs:
       run: eslint .
     - run: npm test
     - uses: ./.github/actions/nugetprerelease
-      id: action
+      id: nugetprerelease
       with:
         solution-file-name:  test.sln
         solution-path: ./tests/data/
-    - run: echo "${{ steps.action.output.found-pre-release }}"
+    - run: echo "result ${{ steps.nugetprerelease.outputs.found-pre-release }}"
+
