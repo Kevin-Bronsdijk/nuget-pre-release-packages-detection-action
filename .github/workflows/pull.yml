@@ -32,5 +32,5 @@ jobs:
       id: action
       with:
         solution-file-name:  test.sln
-        solution-path: ./test/data/ 
+        solution-path: ./tests/data/
     - run: echo "${{ steps.action.output.found-pre-release }}"
