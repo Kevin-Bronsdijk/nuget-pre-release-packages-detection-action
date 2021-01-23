@@ -22,11 +22,10 @@ jobs:
       - name: Run ncc build
         run: npm run-script buildncc
       - run: mkdir -p ./dist
-      - run: echo "123" > ./dist/index.js
       - name: Commit changes
         uses: EndBug/add-and-commit@v7
         with:
           author_name: Kevin Bronsdijk
           author_email: bronsdijk@bronsdijk.com
           message: 'Auto update of ncc build artifact'
-          add: './dist/index.js'
+          add: './dist/*'
