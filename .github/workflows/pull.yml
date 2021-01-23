@@ -26,7 +26,7 @@ jobs:
     - run: npm run build --if-present
     - run: npm install -g eslint
     - name: Run ESLint
-      run: eslint . --ext .js
+      run: eslint .
     - run: npm test
     - uses: ./.github/actions/nuget-pre-release-packages-detection-action
       id: action
