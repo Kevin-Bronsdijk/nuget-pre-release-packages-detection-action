@@ -1,9 +1,8 @@
 name: 'Coverage check'
 on:
     pull_request:
-        branches:
-        - '*'
- 
+        branches: '*'
+
 jobs:
     coverage:
         runs-on: ubuntu-latest
