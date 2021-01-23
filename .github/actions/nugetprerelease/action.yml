@@ -12,4 +12,4 @@ outputs:
     description: 'Boolean indicator used to tell that a pre-release packages was found.'
 runs:
   using: 'node12'
-  main: '../dist/index.js'
+  main: 'dist/index.js'
