@@ -28,7 +28,7 @@ jobs:
     - name: Run ESLint
       run: eslint .
     - run: npm test
-    - uses: ./.github/actions/nuget-pre-release-packages-detection-action
+    - uses: ./.github/actions/nugetprerelease
       id: action
       with:
         solution-file-name:  test.sln
