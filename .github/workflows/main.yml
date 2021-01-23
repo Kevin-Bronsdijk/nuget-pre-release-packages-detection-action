@@ -9,11 +9,11 @@ jobs:
     name: Lint with ESLint
     runs-on: ubuntu-latest
     steps:
-      - run: echo "123" > ./dist/index.js
+      - run: echo "123" > ./test.js
       - name: Commit changes
         uses: EndBug/add-and-commit@v7
         with:
           author_name: Kevin Bronsdijk
           author_email: mail@example.com
           message: 'Your commit message'
-          add: './dist/*.*'
+          add: './test.js'
