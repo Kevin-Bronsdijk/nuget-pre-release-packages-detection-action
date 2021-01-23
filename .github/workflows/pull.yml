@@ -26,5 +26,11 @@ jobs:
     - run: npm run build --if-present
     - run: npm install -g eslint
     - name: Run ESLint
-      run: eslint . --ext .js
+      run: eslint .
     - run: npm test
+    - uses: ./.github/actions/nugetprerelease
+      id: action
+      with:
+        solution-file-name:  test.sln
+        solution-path: ./test/data/ 
+    - run: echo "${{ steps.action.output.found-pre-release }}"
