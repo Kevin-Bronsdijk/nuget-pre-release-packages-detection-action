@@ -28,3 +28,9 @@ jobs:
     - name: Run ESLint
       run: eslint . --ext .js
     - run: npm test
+    - uses: ./.github/actions/nuget-pre-release-packages-detection-action
+      id: action
+      with:
+        solution-file-name:  test.sln
+        solution-path: ./test/data/ 
+    - run: echo "${{ steps.action.output.found-pre-release }}"
