@@ -10,11 +10,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: echo "123" > ./test.js
+      - run: mkdir -p ./dist
+      - run: echo "123" > ./dist/index.js
       - name: Commit changes
         uses: EndBug/add-and-commit@v7
         with:
           author_name: Kevin Bronsdijk
-          author_email: mail@example.com
-          message: 'Your commit message'
-          add: './test.js'
+          author_email: bronsdijk@bronsdijk.com
+          message: 'Auto update of ncc build artifact'
+          add: './dist/index.js'
