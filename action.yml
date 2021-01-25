@@ -1,0 +1,18 @@
+name: 'nuget pre-release detection'
+description: 'This action detects pre-release NuGet packages for all projects linked to a given solution file.'
+inputs:
+  solution-file-name:
+    description: 'The name of the solution file'
+    required: true
+  solution-path:
+    description: 'The directory where the solution solution file exists'
+    required: true
+outputs:
+  found-pre-release:
+    description: 'Boolean indicator used to tell that a pre-release packages was found.'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: "package"
+  color: "green"
