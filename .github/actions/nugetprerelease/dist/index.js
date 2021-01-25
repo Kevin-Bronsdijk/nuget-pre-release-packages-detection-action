@@ -401,6 +401,21 @@ const fs = __nccwpck_require__(747);
 const readline = __nccwpck_require__(58);
 const {ErrorEntry} = __nccwpck_require__(198);
 
+const filterProjectPackageReference = (projectPackageReference) => {
+  if (!projectPackageReference) {
+    return [];
+  }
+
+  let allProjectPackageReference = [];
+  projectPackageReference.forEach(function(entry) {
+    if (entry.length > 0) {
+      allProjectPackageReference = allProjectPackageReference.concat(entry);
+    }
+  });
+
+  return allProjectPackageReference;
+};
+
 const getProjectPathFromRawValue = (value) => {
   if (!value) {
     return value;
@@ -472,6 +487,7 @@ module.exports = {
   getError: getErrorEntryFromRawValue,
   getProjectFilePaths: getPathsContainingAProjectFile,
   getPackageReference,
+  filterProjectPackageReference,
 };
 
 
@@ -483,7 +499,10 @@ module.exports = {
 
 
 const core = __nccwpck_require__(336);
-const {getProjectFilePaths, getPackageReference} = __nccwpck_require__(270);
+const {
+  getProjectFilePaths,
+  getPackageReference,
+  filterProjectPackageReference} = __nccwpck_require__(270);
 
 const getProjectPackageReference = async (projectPaths) => {
   return Promise.all(projectPaths.map((x) => {
@@ -503,12 +522,19 @@ const main = async () => {
   const projectPaths =
       await getProjectFilePaths(solutionPath, solutionFileName);
 
-  getProjectPackageReference(projectPaths).then((packageErrors) => {
-    // todo: hookup logic
-    console.log(packageErrors.filter((e) => e != null), projectPaths);
-  });
+  const projectPackageReference =
+      await getProjectPackageReference(projectPaths);
 
-  core.setOutput('found-pre-release', false);
+  const packageReferenceIssues =
+      filterProjectPackageReference(projectPackageReference);
+
+  if (packageReferenceIssues.length > 0) {
+    console.log(`list of pre-release packages found`,
+        packageReferenceIssues);
+    core.setOutput('found-pre-release', true);
+  } else {
+    core.setOutput('found-pre-release', false);
+  }
 };
 
 main().catch((err) => core.setFailed(err.message));
