@@ -2,7 +2,8 @@
 
 This action detects pre-release NuGet packages for all projects linked to a given solution file. Pre-release packages are often Alpha packages only to be used when developing however avoided when running production code. 
 
-[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Code Quality](https://www.code-inspector.com/project/18182/score/svg)](https://frontend.code-inspector.com/public/project/18182/github-action/dashboard)
+[![Code Grade](https://www.code-inspector.com/project/18182/status/svg)](https://frontend.code-inspector.com/public/project/18182/github-action/dashboard)
 
 ## Inputs
 
