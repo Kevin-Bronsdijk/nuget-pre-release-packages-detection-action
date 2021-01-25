@@ -1,9 +1,15 @@
 # Nuget pre-release packages check
 
+## What is it?
+
 This action detects pre-release NuGet packages for all projects linked to a given solution file. Pre-release packages are often Alpha packages only to be used when developing however avoided when running production code. 
 
 [![Code Quality](https://www.code-inspector.com/project/18182/score/svg)](https://frontend.code-inspector.com/public/project/18182/github-action/dashboard)
 [![Code Grade](https://www.code-inspector.com/project/18182/status/svg)](https://frontend.code-inspector.com/public/project/18182/github-action/dashboard)
+
+## How to use it?
+
+### Configure the GitHub action
 
 ## Inputs
 
@@ -36,3 +42,7 @@ jobs:
                   solution-path: '/home/'
             - run: echo "result ${{ steps.nugetprerelease.outputs.found-pre-release }}"
 ```
+
+# Contact and bug reports
+
+Feel free to open an issue on this GitHub project.
