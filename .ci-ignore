@@ -1,1 +1,4 @@
 .github/actions/nugetprerelease/dist/index.js
+.github/workflows/coverage.yml
+.github/workflows/main.yml
+.github/workflows/pull.yml
