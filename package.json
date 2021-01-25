@@ -7,6 +7,7 @@
     "test": "jest",
     "coverage": "jest --coverage=true",
     "buildncc": "ncc build src/index.js -o .github/actions/nugetprerelease/dist --license licenses.txt",
+    "buildnccroot": "ncc build src/index.js -o dist --license licenses.txt",
     "lint": "eslint ."
   },
   "repository": {
