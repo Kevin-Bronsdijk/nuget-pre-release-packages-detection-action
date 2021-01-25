@@ -6,8 +6,6 @@
 
     <ItemGroup>
       <PackageReference Include="kraken-net" Version="2.0.1" />
-      <PackageReference Include="DevSlice.Net.Core" Version="0.4.0-alpha13" />
-      <PackageReference Include="DevSlice.Net.Api" Version="0.4.0-test" />
     </ItemGroup>
 
 </Project>

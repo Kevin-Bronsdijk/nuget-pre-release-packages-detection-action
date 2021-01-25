@@ -1,7 +1,10 @@
 'use strict';
 
 const core = require('@actions/core');
-const {getProjectFilePaths, getPackageReference} = require('./functions');
+const {
+  getProjectFilePaths,
+  getPackageReference,
+  filterProjectPackageReference} = require('./functions');
 
 const getProjectPackageReference = async (projectPaths) => {
   return Promise.all(projectPaths.map((x) => {
@@ -21,12 +24,19 @@ const main = async () => {
   const projectPaths =
       await getProjectFilePaths(solutionPath, solutionFileName);
 
-  getProjectPackageReference(projectPaths).then((packageErrors) => {
-    // todo: hookup logic
-    console.log(packageErrors.filter((e) => e != null), projectPaths);
-  });
+  const projectPackageReference =
+      await getProjectPackageReference(projectPaths);
 
-  core.setOutput('found-pre-release', false);
+  const packageReferenceIssues =
+      filterProjectPackageReference(projectPackageReference);
+
+  if (packageReferenceIssues.length > 0) {
+    console.log(`list of pre-release packages found`,
+        packageReferenceIssues);
+    core.setOutput('found-pre-release', true);
+  } else {
+    core.setOutput('found-pre-release', false);
+  }
 };
 
 main().catch((err) => core.setFailed(err.message));

@@ -28,10 +28,13 @@ jobs:
     - name: Run ESLint
       run: eslint .
     - run: npm test
-    - uses: ./.github/actions/nugetprerelease
+    - run: npm i -g @vercel/ncc
+    - name: Run ncc build
+      run: npm run-script buildncc
+    - name: Action end-to-end test
+      uses: ./.github/actions/nugetprerelease
       id: nugetprerelease
       with:
         solution-file-name:  test.sln
         solution-path: ./tests/data/
     - run: echo "result ${{ steps.nugetprerelease.outputs.found-pre-release }}"
-
