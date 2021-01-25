@@ -4,6 +4,21 @@ const fs = require('fs');
 const readline = require('readline');
 const {ErrorEntry} = require('./models');
 
+const filterProjectPackageReference = (projectPackageReference) => {
+  if (!projectPackageReference) {
+    return [];
+  }
+
+  let allProjectPackageReference = [];
+  projectPackageReference.forEach(function(entry) {
+    if (entry.length > 0) {
+      allProjectPackageReference = allProjectPackageReference.concat(entry);
+    }
+  });
+
+  return allProjectPackageReference;
+};
+
 const getProjectPathFromRawValue = (value) => {
   if (!value) {
     return value;
@@ -75,4 +90,5 @@ module.exports = {
   getError: getErrorEntryFromRawValue,
   getProjectFilePaths: getPathsContainingAProjectFile,
   getPackageReference,
+  filterProjectPackageReference,
 };

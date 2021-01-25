@@ -1,3 +1,4 @@
+const each = require('jest-each').default;
 const functions = require('../src/functions');
 const fs = require('fs');
 const readline = require('readline');
@@ -15,34 +16,24 @@ describe('getPackageReference tests', () => {
     'Version="2.0.662-Pull6" />',
   ];
 
-  test('when file has content but not contains matching data', async () => {
-    const createReadStreamSpy = jest.spyOn(fs, 'createReadStream')
-        .mockReturnValueOnce('stream');
-    const createInterfaceSpy = jest.spyOn(readline, 'createInterface')
-        .mockReturnValueOnce(MOCK_FILE_CONTENT_NO_MATCHES);
-    const result = await functions.getPackageReference('somewhere.proj');
-
-    expect(createReadStreamSpy).toBeCalledWith('somewhere.proj');
-    expect(createInterfaceSpy)
-        .toBeCalledWith({crlfDelay: Infinity, input: 'stream'});
-    expect(result).toStrictEqual([]);
-  });
-
-  test('when file has content and contains matching data', async () => {
-    const createReadStreamSpy = jest.spyOn(fs, 'createReadStream')
-        .mockReturnValueOnce('stream');
-    const createInterfaceSpy = jest.spyOn(readline, 'createInterface')
-        .mockReturnValueOnce(MOCK_FILE_CONTENT_MATCHES);
-    const result = await functions.getPackageReference('somewhere.proj');
-
-    expect(createReadStreamSpy).toBeCalledWith('somewhere.proj');
-    expect(createInterfaceSpy)
-        .toBeCalledWith({crlfDelay: Infinity, input: 'stream'});
-    expect(result).toEqual([{
+  each([
+    [MOCK_FILE_CONTENT_NO_MATCHES, []],
+    [MOCK_FILE_CONTENT_MATCHES, [{
       nugetPackage: 'DevSlice.Net.TokenHandler',
       path: 'somewhere.proj',
       version: '2.0.662-Pull6',
-    }]);
+    }]],
+  ]).test('when the file has content of \'%s\'', async (text, expected) => {
+    const createReadStreamSpy = jest.spyOn(fs, 'createReadStream')
+        .mockReturnValueOnce('stream');
+    const createInterfaceSpy = jest.spyOn(readline, 'createInterface')
+        .mockReturnValueOnce(text);
+    const result = await functions.getPackageReference('somewhere.proj');
+
+    expect(createReadStreamSpy).toBeCalledWith('somewhere.proj');
+    expect(createInterfaceSpy)
+        .toBeCalledWith({crlfDelay: Infinity, input: 'stream'});
+    expect(result).toEqual(expected);
   });
 });
 
@@ -60,34 +51,23 @@ describe('getProjectFilePaths tests', () => {
       '0CBB-47DB-B8CB-FCB5AF7B233E}',
   ];
 
-  test('when file has content but not contains matching data', async () => {
-    const createReadStreamSpy = jest.spyOn(fs, 'createReadStream')
-        .mockReturnValueOnce('stream');
-    const createInterfaceSpy = jest.spyOn(readline, 'createInterface')
-        .mockReturnValueOnce(MOCK_FILE_CONTENT_NO_MATCHES);
-    const result = await functions
-        .getProjectFilePaths('somewhere\\', 'test.sln');
-
-    expect(createReadStreamSpy).toBeCalledWith('somewhere\\test.sln');
-    expect(createInterfaceSpy)
-        .toBeCalledWith({crlfDelay: Infinity, input: 'stream'});
-    expect(result).toStrictEqual([]);
-  });
-
-  test('when file has content and contains matching data', async () => {
-    const createReadStreamSpy = jest.spyOn(fs, 'createReadStream')
-        .mockReturnValueOnce('stream');
-    const createInterfaceSpy = jest.spyOn(readline, 'createInterface')
-        .mockReturnValueOnce(MOCK_FILE_CONTENT_MATCHES);
-    const result = await functions
-        .getProjectFilePaths('somewhere\\', 'test.sln');
-
-    expect(createReadStreamSpy).toBeCalledWith('somewhere\\test.sln');
-    expect(createInterfaceSpy)
-        .toBeCalledWith({crlfDelay: Infinity, input: 'stream'});
-    expect(result).toStrictEqual([
+  each([
+    [MOCK_FILE_CONTENT_NO_MATCHES, []],
+    [MOCK_FILE_CONTENT_MATCHES, [
       'somewhere\\DevSlice.Net.WebSite.ClientSide\\DevSlice.Net' +
-      '.WebSite.ClientSide.csproj']);
+      '.WebSite.ClientSide.csproj']],
+  ]).test('when the file has content of \'%s\'', async (text, expected) => {
+    const createReadStreamSpy = jest.spyOn(fs, 'createReadStream')
+        .mockReturnValueOnce('stream');
+    const createInterfaceSpy = jest.spyOn(readline, 'createInterface')
+        .mockReturnValueOnce(text);
+    const result = await functions
+        .getProjectFilePaths('somewhere\\', 'test.sln');
+
+    expect(createReadStreamSpy).toBeCalledWith('somewhere\\test.sln');
+    expect(createInterfaceSpy)
+        .toBeCalledWith({crlfDelay: Infinity, input: 'stream'});
+    expect(result).toEqual(expected);
   });
 });
 
@@ -136,5 +116,21 @@ describe('getProjectPath tests', () => {
         '.Net.WebSite.ClientSide\\DevSlice.Net.WebSite.ClientSide.csproj", ' +
         '"{30D8841C-0CBB-47DB-B8CB-FCB5AF7B233E}')).toEqual('DevSlice.Net' +
         '.WebSite.ClientSide\\DevSlice.Net.WebSite.ClientSide.csproj');
+  });
+});
+
+describe('filterProjectPackageReference tests', () => {
+  test('when passing an empty string as the value', () => {
+    expect(functions.filterProjectPackageReference('')).toStrictEqual([]);
+  });
+
+  test('when passing empty arrays', () => {
+    expect(functions.filterProjectPackageReference([[], []]))
+        .toStrictEqual([]);
+  });
+
+  test('when passing an empty array and one with values', () => {
+    expect(functions.filterProjectPackageReference([['test'], []]))
+        .toStrictEqual(['test']);
   });
 });

@@ -5,8 +5,8 @@ inputs:
     description: 'The name of the solution file'
     required: true
   solution-path:
-      description: 'The directory where the solution solution file exists'
-      required: true
+    description: 'The directory where the solution solution file exists'
+    required: true
 outputs:
   found-pre-release:
     description: 'Boolean indicator used to tell that a pre-release packages was found.'
