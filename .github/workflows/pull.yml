@@ -32,7 +32,7 @@ jobs:
     - name: Run ncc build
       run: npm run-script buildncc
     - name: Action end-to-end test
-    - uses: ./.github/actions/nugetprerelease
+      uses: ./.github/actions/nugetprerelease
       id: nugetprerelease
       with:
         solution-file-name:  test.sln
