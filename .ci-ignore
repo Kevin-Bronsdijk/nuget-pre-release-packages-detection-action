@@ -2,3 +2,4 @@
 .github/workflows/coverage.yml
 .github/workflows/main.yml
 .github/workflows/pull.yml
+dist/index.js
