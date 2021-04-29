@@ -117,7 +117,7 @@ describe('getProjectPath tests', () => {
         '4B-00C04F79EFBC}") = "DevSlice.Net.WebSite.ClientSide", "DevSlice' +
         '.Net.WebSite.ClientSide\\DevSlice.Net.WebSite.ClientSide.csproj", ' +
         '"{30D8841C-0CBB-47DB-B8CB-FCB5AF7B233E}'))
-        .toEqual('DevSlice.Net.WebSite.ClientSide\\DevSlice.Net.WebSite.ClientSide.csproj'));
+        .toEqual('DevSlice.Net.WebSite.ClientSide\\DevSlice.Net.WebSite.ClientSide.csproj');
   });
 });
 
