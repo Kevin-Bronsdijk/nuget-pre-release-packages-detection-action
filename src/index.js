@@ -31,8 +31,7 @@ const main = async () => {
       filterProjectPackageReference(projectPackageReference);
 
   if (packageReferenceIssues.length > 0) {
-    console.log(`list of pre-release packages found`,
-        packageReferenceIssues);
+    console.log(`list of pre-release packages found`, packageReferenceIssues);
     core.setOutput('found-pre-release', true);
   } else {
     core.setOutput('found-pre-release', false);

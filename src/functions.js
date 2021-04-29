@@ -5,19 +5,19 @@ const path = require('path')
 const readline = require('readline');
 const {ErrorEntry} = require('./models');
 
-const filterProjectPackageReference = (projectPackageReference) => {
-  if (!projectPackageReference) {
+const filterProjectPackageReference = (projectPackageReferences) => {
+  if (!projectPackageReferences) {
     return [];
   }
 
-  let allProjectPackageReference = [];
-  projectPackageReference.forEach(function(entry) {
-    if (entry.length > 0) {
-      allProjectPackageReference = allProjectPackageReference.concat(entry);
+  let allProjectPackageReferences = [];
+  projectPackageReferences.forEach(function(packageReference) {
+    if (packageReference.length > 0) {
+      allProjectPackageReferences = allProjectPackageReferences.concat(packageReference);
     }
   });
 
-  return allProjectPackageReference;
+  return allProjectPackageReferences;
 };
 
 const getProjectFileNameFromRawValue = (value) => {
