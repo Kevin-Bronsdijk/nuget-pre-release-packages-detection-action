@@ -1,7 +1,7 @@
 'use strict';
 
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
 const readline = require('readline');
 const {ErrorEntry} = require('./models');
 
@@ -13,7 +13,8 @@ const filterProjectPackageReference = (projectPackageReferences) => {
   let allProjectPackageReferences = [];
   projectPackageReferences.forEach(function(packageReference) {
     if (packageReference.length > 0) {
-      allProjectPackageReferences = allProjectPackageReferences.concat(packageReference);
+      allProjectPackageReferences = allProjectPackageReferences
+          .concat(packageReference);
     }
   });
 
@@ -48,7 +49,8 @@ const getErrorEntryFromRawValue = (value, filepath) => {
 };
 
 const getPathsContainingAProjectFile = async (solutionDir, solutionName) => {
-  const solutionPath = path.join(process.env.GITHUB_WORKSPACE, solutionDir, solutionName)
+  const solutionPath =
+    path.join(process.env.GITHUB_WORKSPACE, solutionDir, solutionName);
   const fileStream = fs.createReadStream(solutionPath);
 
   const rl = readline.createInterface({
@@ -65,8 +67,8 @@ const getPathsContainingAProjectFile = async (solutionDir, solutionName) => {
 
   return projects.map((projectFileName) => {
     return path
-      .join(process.env.GITHUB_WORKSPACE, solutionDir, projectFileName)
-      .replace(/\\/g, "/");
+        .join(process.env.GITHUB_WORKSPACE, solutionDir, projectFileName)
+        .replace(/\\/g, '/');
   });
 };
 

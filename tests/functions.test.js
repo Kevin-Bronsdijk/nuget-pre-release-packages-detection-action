@@ -25,7 +25,7 @@ describe('getPackageReference tests', () => {
       version: '2.0.662-Pull6',
     }]],
   ]).test('when the file has content of \'%s\'', async (text, expected) => {
-    process.env.GITHUB_WORKSPACE = ""
+    process.env.GITHUB_WORKSPACE = '';
     const createReadStreamSpy = jest.spyOn(fs, 'createReadStream')
         .mockReturnValueOnce('stream');
     const createInterfaceSpy = jest.spyOn(readline, 'createInterface')
@@ -56,8 +56,8 @@ describe('getProjectFilePaths tests', () => {
   each([
     [MOCK_FILE_CONTENT_NO_MATCHES, []],
     [MOCK_FILE_CONTENT_MATCHES, [
-      path.join('somewhere', 'DevSlice.Net.WebSite.ClientSide', 
-      'DevSlice.Net.WebSite.ClientSide.csproj')]],
+      path.join('somewhere', 'DevSlice.Net.WebSite.ClientSide',
+          'DevSlice.Net.WebSite.ClientSide.csproj')]],
   ]).test('when the file has content of \'%s\'', async (text, expected) => {
     const createReadStreamSpy = jest.spyOn(fs, 'createReadStream')
         .mockReturnValueOnce('stream');
@@ -66,7 +66,8 @@ describe('getProjectFilePaths tests', () => {
     const result = await functions
         .getProjectFilePaths('somewhere', 'test.sln');
 
-    expect(createReadStreamSpy).toBeCalledWith(path.join('somewhere','test.sln'));
+    expect(createReadStreamSpy)
+        .toBeCalledWith(path.join('somewhere', 'test.sln'));
     expect(createInterfaceSpy)
         .toBeCalledWith({crlfDelay: Infinity, input: 'stream'});
     expect(result).toEqual(expected);
@@ -117,7 +118,8 @@ describe('getProjectPath tests', () => {
         '4B-00C04F79EFBC}") = "DevSlice.Net.WebSite.ClientSide", "DevSlice' +
         '.Net.WebSite.ClientSide\\DevSlice.Net.WebSite.ClientSide.csproj", ' +
         '"{30D8841C-0CBB-47DB-B8CB-FCB5AF7B233E}'))
-        .toEqual('DevSlice.Net.WebSite.ClientSide\\DevSlice.Net.WebSite.ClientSide.csproj');
+        .toEqual('DevSlice.Net.WebSite.ClientSide\\' +
+            'DevSlice.Net.WebSite.ClientSide.csproj');
   });
 });
 
