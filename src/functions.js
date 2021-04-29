@@ -64,7 +64,9 @@ const getPathsContainingAProjectFile = async (solutionDir, solutionName) => {
   }
 
   return projects.map((projectFileName) => {
-    return path.join(process.env.GITHUB_WORKSPACE, solutionDir, projectFileName);
+    return path
+      .join(process.env.GITHUB_WORKSPACE, solutionDir, projectFileName)
+      .replace(/\\/g, "/");
   });
 };
 
