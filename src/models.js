@@ -19,9 +19,9 @@ class ErrorEntry {
    * @return {string} The string value.
    */
   toString() {
-    return `path: "{this.path}"\n` +
-      `nugetPackage: "{this.nugetPackage}"\n` +
-      `version: "{this.version}"`;
+    return `path: "${this.path}"\n` +
+      `nugetPackage: "${this.nugetPackage}"\n` +
+      `version: "${this.version}"`;
   }
 }
 
