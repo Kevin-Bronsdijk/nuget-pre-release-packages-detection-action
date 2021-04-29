@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path')
 const readline = require('readline');
 const {ErrorEntry} = require('./models');
 
@@ -19,7 +20,7 @@ const filterProjectPackageReference = (projectPackageReference) => {
   return allProjectPackageReference;
 };
 
-const getProjectPathFromRawValue = (value) => {
+const getProjectFileNameFromRawValue = (value) => {
   if (!value) {
     return value;
   }
@@ -31,7 +32,7 @@ const getProjectPathFromRawValue = (value) => {
   return result[0];
 };
 
-const getErrorEntryFromRawValue = (value, path) => {
+const getErrorEntryFromRawValue = (value, filepath) => {
   if (!value) {
     return value;
   }
@@ -42,12 +43,13 @@ const getErrorEntryFromRawValue = (value, path) => {
   const nodes = value.split('"');
 
   if (nodes.length === nodesSdk && nodes[versionNode].indexOf('-') != -1) {
-    return new ErrorEntry(path, nodes[packageNode], nodes[versionNode]);
+    return new ErrorEntry(filepath, nodes[packageNode], nodes[versionNode]);
   }
 };
 
-const getPathsContainingAProjectFile = async (path, solutionName) => {
-  const fileStream = fs.createReadStream(`${path}${solutionName}`);
+const getPathsContainingAProjectFile = async (solutionDir, solutionName) => {
+  const solutionPath = path.join(process.env.GITHUB_WORKSPACE, solutionDir, solutionName)
+  const fileStream = fs.createReadStream(solutionPath);
 
   const rl = readline.createInterface({
     input: fileStream,
@@ -57,17 +59,17 @@ const getPathsContainingAProjectFile = async (path, solutionName) => {
   const projects = [];
   for await (const line of rl) {
     if (line.includes('csproj')) {
-      projects.push(getProjectPathFromRawValue(line));
+      projects.push(getProjectFileNameFromRawValue(line));
     }
   }
 
-  return projects.map((x) => {
-    return `${path}${x}`;
+  return projects.map((projectFileName) => {
+    return path.join(process.env.GITHUB_WORKSPACE, solutionDir, projectFileName);
   });
 };
 
-const getPackageReference = async (path) => {
-  const fileStream = fs.createReadStream(`${path}`);
+const getPackageReference = async (projectPath) => {
+  const fileStream = fs.createReadStream(projectPath);
 
   const rl = readline.createInterface({
     input: fileStream,
@@ -77,7 +79,7 @@ const getPackageReference = async (path) => {
   const errors = [];
   for await (const line of rl) {
     if (line.includes('PackageReference')) {
-      const error = getErrorEntryFromRawValue(line, path);
+      const error = getErrorEntryFromRawValue(line, projectPath);
       if (error) errors.push(error);
     }
   }
@@ -86,7 +88,7 @@ const getPackageReference = async (path) => {
 };
 
 module.exports = {
-  getProjectPath: getProjectPathFromRawValue,
+  getProjectPath: getProjectFileNameFromRawValue,
   getError: getErrorEntryFromRawValue,
   getProjectFilePaths: getPathsContainingAProjectFile,
   getPackageReference,
