@@ -21,7 +21,7 @@ class ErrorEntry {
   toString() {
     return `path: "${this.path}"\n` +
       `nugetPackage: "${this.nugetPackage}"\n` +
-      `version: "${this.version}\n"`;
+      `version: "${this.version}"`;
   }
 }
 

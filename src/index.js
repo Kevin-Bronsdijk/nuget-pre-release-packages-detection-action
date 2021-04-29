@@ -33,7 +33,7 @@ const main = async () => {
       filterProjectPackageReference(projectPackageReference);
 
   if (packageReferenceIssues.length > 0) {
-    const packageList = packageReferenceIssues.join(', ');
+    const packageList = packageReferenceIssues.join('\n');
     console.log(`list of pre-release packages found`, packageList);
     core.setOutput('found-pre-release', true);
     if (!ignoreFailure) {
