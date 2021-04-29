@@ -524,7 +524,7 @@ class ErrorEntry {
   toString() {
     return `path: "${this.path}"\n` +
       `nugetPackage: "${this.nugetPackage}"\n` +
-      `version: "${this.version}"`;
+      `version: "${this.version}\n"`;
   }
 }
 
@@ -621,6 +621,8 @@ const main = async () => {
   const solutionFileName = core.getInput('solution-file-name');
   // `solution-path` input defined in action metadata file
   const solutionPath = core.getInput('solution-path');
+  // `ignore-failure` input defined in action metadata file
+  const ignoreFailure = core.getInput('ignore-failure') || false;
 
   console.log(`solution-file-name ${solutionFileName}`);
   console.log(`solution-path ${solutionPath}`);
@@ -638,7 +640,9 @@ const main = async () => {
     const packageList = packageReferenceIssues.join(', ');
     console.log(`list of pre-release packages found`, packageList);
     core.setOutput('found-pre-release', true);
-    core.setFailed('Found pre-release packages: ' + packageList);
+    if (!ignoreFailure) {
+      core.setFailed('Found pre-release packages:\n' + packageList);
+    }
   } else {
     core.setOutput('found-pre-release', false);
   }
