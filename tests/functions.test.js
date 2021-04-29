@@ -24,6 +24,7 @@ describe('getPackageReference tests', () => {
       version: '2.0.662-Pull6',
     }]],
   ]).test('when the file has content of \'%s\'', async (text, expected) => {
+    process.env.GITHUB_WORKSPACE = "./"
     const createReadStreamSpy = jest.spyOn(fs, 'createReadStream')
         .mockReturnValueOnce('stream');
     const createInterfaceSpy = jest.spyOn(readline, 'createInterface')
