@@ -113,12 +113,11 @@ describe('getProjectPath tests', () => {
   });
 
   test('when passing a project ref as the value', () => {
-    const projectValue = 'Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = '+
-      '"DevSlice.Net.WebSite.ClientSide", '+
-      '"DevSlice.Net.WebSite.ClientSide\\DevSlice.Net.WebSite.ClientSide.csproj",'+
-      '"{30D8841C-0CBB-47DB-B8CB-FCB5AF7B233E}';
-    expect(functions.getProjectPath(projectValue))
-        .toEqual(path.join('DevSlice.Net.WebSite.ClientSide','DevSlice.Net.WebSite.ClientSide.csproj'));
+    expect(functions.getProjectPath('Project("{FAE04EC0-301F-11D3-BF' +
+        '4B-00C04F79EFBC}") = "DevSlice.Net.WebSite.ClientSide", "DevSlice' +
+        '.Net.WebSite.ClientSide\\DevSlice.Net.WebSite.ClientSide.csproj", ' +
+        '"{30D8841C-0CBB-47DB-B8CB-FCB5AF7B233E}'))
+        .toEqual(path.join('DevSlice.Net.WebSite.ClientSide', 'DevSlice.Net.WebSite.ClientSide.csproj'));
   });
 });
 
