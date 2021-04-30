@@ -7,6 +7,9 @@ inputs:
   solution-path:
     description: 'The directory where the solution solution file exists'
     required: true
+  ignore-failure:
+    description: 'Used for testing, to ignore failure but can still verify output'
+    required: false
 outputs:
   found-pre-release:
     description: 'Boolean indicator used to tell that a pre-release packages was found.'

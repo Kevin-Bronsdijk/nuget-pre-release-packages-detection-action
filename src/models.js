@@ -13,6 +13,16 @@ class ErrorEntry {
     this.nugetPackage = nugetPackage;
     this.version = version;
   }
+
+  /**
+   * Custom toString method.
+   * @return {string} The string value.
+   */
+  toString() {
+    return `path: "${this.path}"\n` +
+      `nugetPackage: "${this.nugetPackage}"\n` +
+      `version: "${this.version}"`;
+  }
 }
 
 module.exports = {

@@ -1,9 +1,8 @@
-module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 225:
+/***/ 570:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -16,7 +15,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const os = __importStar(__nccwpck_require__(87));
-const utils_1 = __nccwpck_require__(195);
+const utils_1 = __nccwpck_require__(519);
 /**
  * Commands
  *
@@ -88,7 +87,7 @@ function escapeProperty(s) {
 
 /***/ }),
 
-/***/ 336:
+/***/ 451:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -109,9 +108,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const command_1 = __nccwpck_require__(225);
-const file_command_1 = __nccwpck_require__(677);
-const utils_1 = __nccwpck_require__(195);
+const command_1 = __nccwpck_require__(570);
+const file_command_1 = __nccwpck_require__(553);
+const utils_1 = __nccwpck_require__(519);
 const os = __importStar(__nccwpck_require__(87));
 const path = __importStar(__nccwpck_require__(622));
 /**
@@ -332,7 +331,7 @@ exports.getState = getState;
 
 /***/ }),
 
-/***/ 677:
+/***/ 553:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -349,7 +348,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const fs = __importStar(__nccwpck_require__(747));
 const os = __importStar(__nccwpck_require__(87));
-const utils_1 = __nccwpck_require__(195);
+const utils_1 = __nccwpck_require__(519);
 function issueCommand(command, message) {
     const filePath = process.env[`GITHUB_${command}`];
     if (!filePath) {
@@ -367,7 +366,7 @@ exports.issueCommand = issueCommand;
 
 /***/ }),
 
-/***/ 195:
+/***/ 519:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -392,31 +391,33 @@ exports.toCommandValue = toCommandValue;
 
 /***/ }),
 
-/***/ 270:
+/***/ 376:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 
 
 const fs = __nccwpck_require__(747);
+const path = __nccwpck_require__(622);
 const readline = __nccwpck_require__(58);
-const {ErrorEntry} = __nccwpck_require__(198);
+const {ErrorEntry} = __nccwpck_require__(685);
 
-const filterProjectPackageReference = (projectPackageReference) => {
-  if (!projectPackageReference) {
+const filterProjectPackageReference = (projectPackageReferences) => {
+  if (!projectPackageReferences) {
     return [];
   }
 
-  let allProjectPackageReference = [];
-  projectPackageReference.forEach(function(entry) {
-    if (entry.length > 0) {
-      allProjectPackageReference = allProjectPackageReference.concat(entry);
+  let allProjectPackageReferences = [];
+  projectPackageReferences.forEach(function(packageReference) {
+    if (packageReference.length > 0) {
+      allProjectPackageReferences = allProjectPackageReferences
+          .concat(packageReference);
     }
   });
 
-  return allProjectPackageReference;
+  return allProjectPackageReferences;
 };
 
-const getProjectPathFromRawValue = (value) => {
+const getProjectFileNameFromRawValue = (value) => {
   if (!value) {
     return value;
   }
@@ -428,7 +429,7 @@ const getProjectPathFromRawValue = (value) => {
   return result[0];
 };
 
-const getErrorEntryFromRawValue = (value, path) => {
+const getErrorEntryFromRawValue = (value, filepath) => {
   if (!value) {
     return value;
   }
@@ -439,12 +440,14 @@ const getErrorEntryFromRawValue = (value, path) => {
   const nodes = value.split('"');
 
   if (nodes.length === nodesSdk && nodes[versionNode].indexOf('-') != -1) {
-    return new ErrorEntry(path, nodes[packageNode], nodes[versionNode]);
+    return new ErrorEntry(filepath, nodes[packageNode], nodes[versionNode]);
   }
 };
 
-const getPathsContainingAProjectFile = async (path, solutionName) => {
-  const fileStream = fs.createReadStream(`${path}${solutionName}`);
+const getPathsContainingAProjectFile = async (solutionDir, solutionName) => {
+  const solutionPath =
+    path.join(process.env.GITHUB_WORKSPACE, solutionDir, solutionName);
+  const fileStream = fs.createReadStream(solutionPath);
 
   const rl = readline.createInterface({
     input: fileStream,
@@ -454,17 +457,19 @@ const getPathsContainingAProjectFile = async (path, solutionName) => {
   const projects = [];
   for await (const line of rl) {
     if (line.includes('csproj')) {
-      projects.push(getProjectPathFromRawValue(line));
+      projects.push(getProjectFileNameFromRawValue(line));
     }
   }
 
-  return projects.map((x) => {
-    return `${path}${x}`;
+  return projects.map((projectFileName) => {
+    return path
+        .join(process.env.GITHUB_WORKSPACE, solutionDir, projectFileName)
+        .replace(/\\/g, '/');
   });
 };
 
-const getPackageReference = async (path) => {
-  const fileStream = fs.createReadStream(`${path}`);
+const getPackageReference = async (projectPath) => {
+  const fileStream = fs.createReadStream(projectPath);
 
   const rl = readline.createInterface({
     input: fileStream,
@@ -474,7 +479,7 @@ const getPackageReference = async (path) => {
   const errors = [];
   for await (const line of rl) {
     if (line.includes('PackageReference')) {
-      const error = getErrorEntryFromRawValue(line, path);
+      const error = getErrorEntryFromRawValue(line, projectPath);
       if (error) errors.push(error);
     }
   }
@@ -483,7 +488,7 @@ const getPackageReference = async (path) => {
 };
 
 module.exports = {
-  getProjectPath: getProjectPathFromRawValue,
+  getProjectPath: getProjectFileNameFromRawValue,
   getError: getErrorEntryFromRawValue,
   getProjectFilePaths: getPathsContainingAProjectFile,
   getPackageReference,
@@ -493,56 +498,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 689:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) => {
-
-
-
-const core = __nccwpck_require__(336);
-const {
-  getProjectFilePaths,
-  getPackageReference,
-  filterProjectPackageReference} = __nccwpck_require__(270);
-
-const getProjectPackageReference = async (projectPaths) => {
-  return Promise.all(projectPaths.map((x) => {
-    return getPackageReference(x);
-  }));
-};
-
-const main = async () => {
-  // `solution-file-name` input defined in action metadata file
-  const solutionFileName = core.getInput('solution-file-name');
-  // `solution-path` input defined in action metadata file
-  const solutionPath = core.getInput('solution-path');
-
-  console.log(`solution-file-name ${solutionFileName}`);
-  console.log(`solution-path ${solutionPath}`);
-
-  const projectPaths =
-      await getProjectFilePaths(solutionPath, solutionFileName);
-
-  const projectPackageReference =
-      await getProjectPackageReference(projectPaths);
-
-  const packageReferenceIssues =
-      filterProjectPackageReference(projectPackageReference);
-
-  if (packageReferenceIssues.length > 0) {
-    console.log(`list of pre-release packages found`,
-        packageReferenceIssues);
-    core.setOutput('found-pre-release', true);
-  } else {
-    core.setOutput('found-pre-release', false);
-  }
-};
-
-main().catch((err) => core.setFailed(err.message));
-
-
-/***/ }),
-
-/***/ 198:
+/***/ 685:
 /***/ ((module) => {
 
 
@@ -559,6 +515,16 @@ class ErrorEntry {
     this.path = path;
     this.nugetPackage = nugetPackage;
     this.version = version;
+  }
+
+  /**
+   * Custom toString method.
+   * @return {string} The string value.
+   */
+  toString() {
+    return `path: "${this.path}"\n` +
+      `nugetPackage: "${this.nugetPackage}"\n` +
+      `version: "${this.version}"`;
   }
 }
 
@@ -605,8 +571,9 @@ module.exports = require("readline");;
 /******/ 	// The require function
 /******/ 	function __nccwpck_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
@@ -631,10 +598,60 @@ module.exports = require("readline");;
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
-/******/ 	__nccwpck_require__.ab = __dirname + "/";/************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __nccwpck_require__(689);
+/******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+
+
+const core = __nccwpck_require__(451);
+const {
+  getProjectFilePaths,
+  getPackageReference,
+  filterProjectPackageReference} = __nccwpck_require__(376);
+
+const getProjectPackageReference = async (projectPaths) => {
+  return Promise.all(projectPaths.map((x) => {
+    return getPackageReference(x);
+  }));
+};
+
+const main = async () => {
+  // `solution-file-name` input defined in action metadata file
+  const solutionFileName = core.getInput('solution-file-name');
+  // `solution-path` input defined in action metadata file
+  const solutionPath = core.getInput('solution-path');
+  // `ignore-failure` input defined in action metadata file
+  const ignoreFailure = core.getInput('ignore-failure') || false;
+
+  console.log(`solution-file-name ${solutionFileName}`);
+  console.log(`solution-path ${solutionPath}`);
+
+  const projectPaths =
+      await getProjectFilePaths(solutionPath, solutionFileName);
+
+  const projectPackageReference =
+      await getProjectPackageReference(projectPaths);
+
+  const packageReferenceIssues =
+      filterProjectPackageReference(projectPackageReference);
+
+  if (packageReferenceIssues.length > 0) {
+    const packageList = packageReferenceIssues.join('\n');
+    console.log(`list of pre-release packages found`, packageList);
+    core.setOutput('found-pre-release', true);
+    if (!ignoreFailure) {
+      core.setFailed('Found pre-release packages:\n' + packageList);
+    }
+  } else {
+    core.setOutput('found-pre-release', false);
+  }
+};
+
+main().catch((err) => core.setFailed(err.message));
+
+})();
+
+module.exports = __webpack_exports__;
 /******/ })()
 ;

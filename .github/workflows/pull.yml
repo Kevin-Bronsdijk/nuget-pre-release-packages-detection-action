@@ -37,4 +37,5 @@ jobs:
       with:
         solution-file-name:  test.sln
         solution-path: ./tests/data/
+        ignore-failure: true
     - run: echo "result ${{ steps.nugetprerelease.outputs.found-pre-release }}"
