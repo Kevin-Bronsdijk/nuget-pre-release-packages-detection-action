@@ -1,9 +1,8 @@
-module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 225:
+/***/ 25:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -16,7 +15,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 const os = __importStar(__nccwpck_require__(87));
-const utils_1 = __nccwpck_require__(195);
+const utils_1 = __nccwpck_require__(624);
 /**
  * Commands
  *
@@ -88,7 +87,7 @@ function escapeProperty(s) {
 
 /***/ }),
 
-/***/ 336:
+/***/ 738:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -109,9 +108,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const command_1 = __nccwpck_require__(225);
-const file_command_1 = __nccwpck_require__(677);
-const utils_1 = __nccwpck_require__(195);
+const command_1 = __nccwpck_require__(25);
+const file_command_1 = __nccwpck_require__(722);
+const utils_1 = __nccwpck_require__(624);
 const os = __importStar(__nccwpck_require__(87));
 const path = __importStar(__nccwpck_require__(622));
 /**
@@ -332,7 +331,7 @@ exports.getState = getState;
 
 /***/ }),
 
-/***/ 677:
+/***/ 722:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -349,7 +348,7 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 /* eslint-disable @typescript-eslint/no-explicit-any */
 const fs = __importStar(__nccwpck_require__(747));
 const os = __importStar(__nccwpck_require__(87));
-const utils_1 = __nccwpck_require__(195);
+const utils_1 = __nccwpck_require__(624);
 function issueCommand(command, message) {
     const filePath = process.env[`GITHUB_${command}`];
     if (!filePath) {
@@ -367,7 +366,7 @@ exports.issueCommand = issueCommand;
 
 /***/ }),
 
-/***/ 195:
+/***/ 624:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -392,14 +391,14 @@ exports.toCommandValue = toCommandValue;
 
 /***/ }),
 
-/***/ 270:
+/***/ 475:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 
 
 const fs = __nccwpck_require__(747);
 const readline = __nccwpck_require__(58);
-const {ErrorEntry} = __nccwpck_require__(198);
+const {ErrorEntry} = __nccwpck_require__(80);
 
 const filterProjectPackageReference = (projectPackageReference) => {
   if (!projectPackageReference) {
@@ -493,16 +492,109 @@ module.exports = {
 
 /***/ }),
 
-/***/ 689:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) => {
+/***/ 80:
+/***/ ((module) => {
 
 
 
-const core = __nccwpck_require__(336);
+/** Class representing an package conflict. */
+class ErrorEntry {
+  /**
+   * Create a ErrorEntry.
+   * @param {number} path - The project path.
+   * @param {number} nugetPackage - The package name.
+   * @param {number} version - The package version.
+   */
+  constructor(path, nugetPackage, version) {
+    this.path = path;
+    this.nugetPackage = nugetPackage;
+    this.version = version;
+  }
+}
+
+module.exports = {
+  ErrorEntry: ErrorEntry,
+};
+
+
+/***/ }),
+
+/***/ 747:
+/***/ ((module) => {
+
+module.exports = require("fs");
+
+/***/ }),
+
+/***/ 87:
+/***/ ((module) => {
+
+module.exports = require("os");
+
+/***/ }),
+
+/***/ 622:
+/***/ ((module) => {
+
+module.exports = require("path");
+
+/***/ }),
+
+/***/ 58:
+/***/ ((module) => {
+
+module.exports = require("readline");
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __nccwpck_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		var threw = true;
+/******/ 		try {
+/******/ 			__webpack_modules__[moduleId].call(module.exports, module, module.exports, __nccwpck_require__);
+/******/ 			threw = false;
+/******/ 		} finally {
+/******/ 			if(threw) delete __webpack_module_cache__[moduleId];
+/******/ 		}
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat */
+/******/ 	
+/******/ 	if (typeof __nccwpck_require__ !== 'undefined') __nccwpck_require__.ab = __dirname + "/";
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+
+
+const core = __nccwpck_require__(738);
 const {
   getProjectFilePaths,
   getPackageReference,
-  filterProjectPackageReference} = __nccwpck_require__(270);
+  filterProjectPackageReference} = __nccwpck_require__(475);
 
 const getProjectPackageReference = async (projectPaths) => {
   return Promise.all(projectPaths.map((x) => {
@@ -539,102 +631,8 @@ const main = async () => {
 
 main().catch((err) => core.setFailed(err.message));
 
+})();
 
-/***/ }),
-
-/***/ 198:
-/***/ ((module) => {
-
-
-
-/** Class representing an package conflict. */
-class ErrorEntry {
-  /**
-   * Create a ErrorEntry.
-   * @param {number} path - The project path.
-   * @param {number} nugetPackage - The package name.
-   * @param {number} version - The package version.
-   */
-  constructor(path, nugetPackage, version) {
-    this.path = path;
-    this.nugetPackage = nugetPackage;
-    this.version = version;
-  }
-}
-
-module.exports = {
-  ErrorEntry: ErrorEntry,
-};
-
-
-/***/ }),
-
-/***/ 747:
-/***/ ((module) => {
-
-module.exports = require("fs");;
-
-/***/ }),
-
-/***/ 87:
-/***/ ((module) => {
-
-module.exports = require("os");;
-
-/***/ }),
-
-/***/ 622:
-/***/ ((module) => {
-
-module.exports = require("path");;
-
-/***/ }),
-
-/***/ 58:
-/***/ ((module) => {
-
-module.exports = require("readline");;
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __nccwpck_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		var threw = true;
-/******/ 		try {
-/******/ 			__webpack_modules__[moduleId].call(module.exports, module, module.exports, __nccwpck_require__);
-/******/ 			threw = false;
-/******/ 		} finally {
-/******/ 			if(threw) delete __webpack_module_cache__[moduleId];
-/******/ 		}
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/compat */
-/******/ 	
-/******/ 	__nccwpck_require__.ab = __dirname + "/";/************************************************************************/
-/******/ 	// module exports must be returned from runtime so entry inlining is disabled
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	return __nccwpck_require__(689);
+module.exports = __webpack_exports__;
 /******/ })()
 ;
