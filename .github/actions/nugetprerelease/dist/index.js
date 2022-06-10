@@ -2,7 +2,7 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 25:
+/***/ 178:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -14,8 +14,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const os = __importStar(__nccwpck_require__(87));
-const utils_1 = __nccwpck_require__(624);
+const os = __importStar(__nccwpck_require__(37));
+const utils_1 = __nccwpck_require__(203);
 /**
  * Commands
  *
@@ -87,7 +87,7 @@ function escapeProperty(s) {
 
 /***/ }),
 
-/***/ 738:
+/***/ 250:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -108,11 +108,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", ({ value: true }));
-const command_1 = __nccwpck_require__(25);
-const file_command_1 = __nccwpck_require__(722);
-const utils_1 = __nccwpck_require__(624);
-const os = __importStar(__nccwpck_require__(87));
-const path = __importStar(__nccwpck_require__(622));
+const command_1 = __nccwpck_require__(178);
+const file_command_1 = __nccwpck_require__(299);
+const utils_1 = __nccwpck_require__(203);
+const os = __importStar(__nccwpck_require__(37));
+const path = __importStar(__nccwpck_require__(17));
 /**
  * The code to exit an action
  */
@@ -331,7 +331,7 @@ exports.getState = getState;
 
 /***/ }),
 
-/***/ 722:
+/***/ 299:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
 
@@ -346,9 +346,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", ({ value: true }));
 // We use any as a valid input type
 /* eslint-disable @typescript-eslint/no-explicit-any */
-const fs = __importStar(__nccwpck_require__(747));
-const os = __importStar(__nccwpck_require__(87));
-const utils_1 = __nccwpck_require__(624);
+const fs = __importStar(__nccwpck_require__(147));
+const os = __importStar(__nccwpck_require__(37));
+const utils_1 = __nccwpck_require__(203);
 function issueCommand(command, message) {
     const filePath = process.env[`GITHUB_${command}`];
     if (!filePath) {
@@ -366,7 +366,7 @@ exports.issueCommand = issueCommand;
 
 /***/ }),
 
-/***/ 624:
+/***/ 203:
 /***/ ((__unused_webpack_module, exports) => {
 
 
@@ -391,14 +391,14 @@ exports.toCommandValue = toCommandValue;
 
 /***/ }),
 
-/***/ 475:
+/***/ 652:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 
 
-const fs = __nccwpck_require__(747);
-const readline = __nccwpck_require__(58);
-const {ErrorEntry} = __nccwpck_require__(80);
+const fs = __nccwpck_require__(147);
+const readline = __nccwpck_require__(521);
+const {ErrorEntry} = __nccwpck_require__(921);
 
 const filterProjectPackageReference = (projectPackageReference) => {
   if (!projectPackageReference) {
@@ -492,7 +492,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 80:
+/***/ 921:
 /***/ ((module) => {
 
 
@@ -519,28 +519,28 @@ module.exports = {
 
 /***/ }),
 
-/***/ 747:
+/***/ 147:
 /***/ ((module) => {
 
 module.exports = require("fs");
 
 /***/ }),
 
-/***/ 87:
+/***/ 37:
 /***/ ((module) => {
 
 module.exports = require("os");
 
 /***/ }),
 
-/***/ 622:
+/***/ 17:
 /***/ ((module) => {
 
 module.exports = require("path");
 
 /***/ }),
 
-/***/ 58:
+/***/ 521:
 /***/ ((module) => {
 
 module.exports = require("readline");
@@ -590,11 +590,11 @@ var __webpack_exports__ = {};
 (() => {
 
 
-const core = __nccwpck_require__(738);
+const core = __nccwpck_require__(250);
 const {
   getProjectFilePaths,
   getPackageReference,
-  filterProjectPackageReference} = __nccwpck_require__(475);
+  filterProjectPackageReference} = __nccwpck_require__(652);
 
 const getProjectPackageReference = async (projectPaths) => {
   return Promise.all(projectPaths.map((x) => {
