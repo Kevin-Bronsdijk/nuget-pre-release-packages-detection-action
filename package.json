@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/Kevin-Bronsdijk/nuget-pre-release-packages-detection-action#readme",
   "dependencies": {
-    "@actions/core": "^1.2.6",
+    "@actions/core": "^1.9.1",
     "line-reader": "^0.4.0"
   },
   "devDependencies": {
