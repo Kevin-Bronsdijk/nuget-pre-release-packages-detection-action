@@ -14,6 +14,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 14.x
+    - run: npm install '@actions/core
     - name: install dependencies
       run: npm ci
     - run: npm run build --if-present
