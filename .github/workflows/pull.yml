@@ -17,7 +17,7 @@ jobs:
     - name: install dependencies
       run: yarn install --frozen-lockfile
     - run: yarn add global @vercel/ncc
-    - run: yarn global eslint
+    - run: yarn add global eslint
     - name: run eslint
       run: eslint .
     - run: yarn test
