@@ -1,4 +1,4 @@
-name: Main package ncc build
+name: 'Package'
 on:
   push:
     branches:
@@ -6,26 +6,22 @@ on:
 
 jobs:
   build:
-    name: Create ncc artifact
+    name: create ncc artifact
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - name: use node.js 14.x
+        uses: actions/setup-node@v3
         with:
-          node-version: 12.x
-      - name: Print Node Version
-        run: node --version
-      - name: Install Dependencies
-        run: npm ci
-      - run: npm i -g @vercel/ncc 
-      - name: Run ncc build
-        run: npm run-script buildncc
-      - run: npm run-script buildnccroot
+          node-version: 14.x
+      - name: install dependencies
+        run: yarn install --frozen-lockfile
+      - run: yarn run buildncc
+      - run: yarn run buildnccroot
       - run: mkdir -p ./github/actions/nugetprerelease/dist
       - run: mkdir -p ./dist
       - run: cp ./.github/actions/nugetprerelease/action.yml ./action.yml
-      - name: Commit changes
+      - name: commit changes
         uses: EndBug/add-and-commit@v7
         with:
           author_name: Kevin Bronsdijk
