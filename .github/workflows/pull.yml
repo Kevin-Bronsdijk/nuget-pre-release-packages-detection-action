@@ -16,10 +16,8 @@ jobs:
         node-version: 14.x
     - name: install dependencies
       run: yarn install --frozen-lockfile
-    - run: yarn add global @vercel/ncc
-    - run: yarn add global eslint
     - name: run eslint
-      run: eslint .
+      run: yarn run lint
     - run: yarn test
     - run: yarn run buildncc
     - name: action end-to-end test
