@@ -14,17 +14,15 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 14.x
-    - run: npm install '@actions/core
     - name: install dependencies
-      run: npm ci
-    - run: npm run build --if-present
-    - run: npm install -g eslint
-    - name: Run ESLint
+      run: yarn install --frozen-lockfile
+    - run: yarn add global @vercel/ncc
+    - run: yarn run build
+    - run: yarn global eslint
+    - name: run eslint
       run: eslint .
-    - run: npm test
-    - run: npm i -g @vercel/ncc
-    - name: run ncc build
-      run: npm run-script buildncc
+    - run: yarn test
+    - run: yarn run buildncc
     - name: action end-to-end test
       uses: ./.github/actions/nugetprerelease
       id: nugetprerelease
