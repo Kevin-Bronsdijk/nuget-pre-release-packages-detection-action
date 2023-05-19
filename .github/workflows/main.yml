@@ -15,11 +15,9 @@ jobs:
         with:
           node-version: 14.x
       - name: install dependencies
-        run: npm ci
-      - run: npm i -g @vercel/ncc 
-      - name: run ncc build
-        run: npm run-script buildncc
-      - run: npm run-script buildnccroot
+        run: yarn install --frozen-lockfile
+      - run: yarn run buildncc
+      - run: yarn run buildnccroot
       - run: mkdir -p ./github/actions/nugetprerelease/dist
       - run: mkdir -p ./dist
       - run: cp ./.github/actions/nugetprerelease/action.yml ./action.yml
