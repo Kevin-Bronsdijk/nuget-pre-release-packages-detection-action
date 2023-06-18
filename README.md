@@ -2,7 +2,7 @@
 
 ## What is it?
 
-This action detects pre-release NuGet packages for all projects linked to a given solution file. Pre-release packages are often Alpha packages only to be used when developing however avoided when running production code. 
+This action detects pre-release NuGet packages for all projects linked to a given solution file. Pre-release packages are often Alpha packages only used when developing but avoided when running production code. 
 
 <a href="https://github.com/Kevin-Bronsdijk/nuget-pre-release-packages-detection-action/actions"><img alt="javscript-action status" src="https://github.com/Kevin-Bronsdijk/nuget-pre-release-packages-detection-action/workflows/Main%20package%20ncc%20build/badge.svg"></a>
 
