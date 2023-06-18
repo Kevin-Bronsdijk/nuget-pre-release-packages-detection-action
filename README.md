@@ -18,13 +18,13 @@ This action detects pre-release NuGet packages for all projects linked to a give
 
 ### `solution-path`
 
-**Required** The directory where the solution solution file exists.
+**Required** The directory where the solution file exists.
 
 ## Outputs
 
 ### `found-pre-release`
 
-Boolean indicator used to tell that a pre-release packages was found.
+A boolean indicator used to tell that a pre-release package was found.
 
 ## Example usage
 
